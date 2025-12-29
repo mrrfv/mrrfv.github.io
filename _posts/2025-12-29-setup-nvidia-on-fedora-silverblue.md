@@ -1,5 +1,5 @@
 ---
-title: How to install NVIDIA drivers on Fedora Silverblue (with Secure Boot)
+title: How to install NVIDIA drivers on Fedora Silverblue 43 (with Secure Boot)
 date: 2025-12-29 06:50:53 +0100
 categories: [Linux]
 tags: [linux, nvidia]
