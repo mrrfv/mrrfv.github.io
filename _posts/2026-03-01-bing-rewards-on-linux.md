@@ -19,11 +19,9 @@ Because settings overrides are unavailable on Linux, the Bing Rewards Chrome ext
 
 2. Once installed, navigate to the [Microsoft Bing Search with Rewards extension](https://chromewebstore.google.com/detail/microsoft-bing-search-wit/fbgcedjacmlbgleddnoacbnijgmiolem) page in your web browser. Right click anywhere on the web page, and click on "View extension source".
 
-3. Navigate to `manifest.json` and copy the value of "search_url", ending at `&q=`. As of March 2026, the correct fragment to copy is `https://www.bing.com/search?FORM=U523MF&PC=__PARAM__U523&q=`
+3. Navigate to `manifest.json` and copy the value of "search_url", ending at `&q=`. As of March 2026, the correct fragment to copy is `https://www.bing.com/search?FORM=U523MF&PC=__PARAM__U523&q=`. You could've simply copied the URL from here, but that way you'd only be [fed for a day](https://en.wiktionary.org/wiki/give_a_man_a_fish_and_you_feed_him_for_a_day;_teach_a_man_to_fish_and_you_feed_him_for_a_lifetime) ;)
 
-Now it's time to add the search URL. You could've simply copied the URL from here, but that way you'd only be [fed for a day](https://en.wiktionary.org/wiki/give_a_man_a_fish_and_you_feed_him_for_a_day;_teach_a_man_to_fish_and_you_feed_him_for_a_lifetime) ;)
-
-4. Open your browser Settings, navigate to "Search engine", then "Manage search engines and site search". Scroll down to the bottom and add a new site search engine.
+4. Now it's time to add the search URL. Open your browser Settings, navigate to "Search engine", then "Manage search engines and site search". Scroll down to the bottom and add a new site search engine.
     - For **Name**, use `Bing`. You can actually set this to whatever.
     - For **Shortcut**, anything is okay as well; I suggest `:bi`. `:b` may not be accepted since it's already used for the default Bing.
     - **URL with %s in place of query** is the important part. Paste the URL found in `manifest.json` here. Remember to add `%s` after `&q=` - this lets the browser know where to insert your search query into the URL.
