@@ -128,6 +128,6 @@ If `nvidia-smi` returns an error, check if the key was enrolled correctly:
 ```bash
 mokutil --list-enrolled
 ```
-If you don't see your key (often labeled with your username/hostname), repeat Step 4 and 5.
+If you don't see your key (often labeled with your username/hostname), repeat Steps 4, 5 and 6.
 
-You could also try reinstalling the drivers (step 6) and waiting at least 5 minutes before rebooting. Sometimes the kernel modules compile in the background.
+You could also try reinstalling the drivers (step 7) and waiting at least 5 minutes before rebooting. Sometimes the kernel modules compile in the background.
