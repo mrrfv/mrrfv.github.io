@@ -1,11 +1,11 @@
 ---
-title: How to install NVIDIA drivers on Fedora Silverblue 43 (with Secure Boot)
-date: 2025-12-29 06:50:53 +0100
+title: How to install NVIDIA drivers on Fedora Silverblue 44 (with Secure Boot)
+date: 2026-05-17 06:50:53 +0100
 categories: [Linux]
 tags: [linux, nvidia]
 ---
 
-Setting up NVIDIA drivers on an atomic desktop like Fedora Silverblue can be daunting, especially with Secure Boot enabled. In reality, it's a straightforward, one-time process.
+Setting up NVIDIA drivers on an atomic desktop like Fedora Silverblue can be daunting, especially with Secure Boot enabled. In reality, it's a straightforward, one-time process. *Originally published for version 43, now updated.*
 
 ## Overview
 
@@ -37,7 +37,8 @@ sudo rpm-ostree install \
 To compile the NVIDIA kernel modules locally, we need specific build tools and the signing utilities for Secure Boot.
 
 ```bash
-sudo rpm-ostree install kmodtool akmods openssl rpmdevtools mock
+sudo rpm-ostree install kmodtool akmods rpmdevtools mock
+# Fedora Silverblue 43 users: add openssl to the end of this command.
 ```
 **Important:** You need to reboot after this step, unless you use `--apply-live`. Otherwise the commands below won't work, as the tools aren't present in the current environment.
 
@@ -57,7 +58,24 @@ sudo mokutil --import /etc/pki/akmods/certs/public_key.der
 
 > *Process courtesy of [roworu](https://github.com/roworu/nvidia-fedora-secureboot)*
 
-### 5. Reboot & enroll key
+### 5. Install silverblue-akmods-keys
+
+According to the [RPM Fusion docs](https://rpmfusion.org/Howto/NVIDIA#OSTree_.28Silverblue.2FKinoite.2Fetc.29):
+
+> There is a need for a special "Hack" to work with secureboot on OSTree systems. Once you have the keys generated and imported, you need to create a dedicated packages [sic] for the key to be available when signing the kernel modules in OStree.
+
+We'll install `silverblue-akmods-keys` to provide this package:
+
+```bash
+# Clone CheariX/silverblue-akmods-keys
+git clone https://github.com/CheariX/silverblue-akmods-keys
+cd silverblue-akmods-keys
+# Build and install the package
+sudo bash setup.sh
+rpm-ostree install akmods-keys-0.0.2-8.fc$(rpm -E %fedora).noarch.rpm
+```
+
+### 6. Reboot & enroll key
 Reboot your computer now.
 
 ```bash
@@ -75,7 +93,7 @@ Upon booting, you will see a blue screen labeled **"Shim UEFI key management"**.
 
 If you miss this screen, the key won't be trusted, and the driver will fail to load.
 
-### 6. Install the NVIDIA drivers
+### 7. Install the NVIDIA drivers
 Now that our signing key is enrolled, we can layer the actual drivers. This command installs the driver, CUDA libs, and hardware acceleration support.
 
 ```bash
@@ -92,7 +110,7 @@ sudo rpm-ostree kargs --append=rd.driver.blacklist=nouveau --append=modprobe.bla
 
 > *Sourced from [RPM Fusion NVIDIA HOWTO](https://rpmfusion.org/Howto/NVIDIA#OSTree_.28Silverblue.2FKinoite.2Fetc.29)*
 
-### 7. Final reboot
+### 8. Final reboot
 Reboot your system one last time to boot into the new deployment with the drivers installed.
 
 Once logged in, verify the installation:
