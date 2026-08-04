@@ -167,7 +167,7 @@ podman run \
   forgejo-runner daemon --config runner-config.yml
 ```
 
-### 4. Profit
+## 4. Profit
 
 Manually start the Quadlets.
 
